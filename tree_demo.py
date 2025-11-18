@@ -1,83 +1,16 @@
-from __future__ import annotations
-from typing import List, Tuple, Any, Optional
-from abc import abstractmethod, ABC
+from tree_demo import LeafNode,DecisionNode
 
-#--- eOBSe & eTODOe ---
-    # Adding the inoput and output types specifications later 
-    # Our tree will only work for numeric values!
+labels = {idx: (True if idx % 2 == 1 else False) for idx in range(1, 11)}
 
-#------------------------ COMPOSITE ------------------------#
+l1 = LeafNode(labels,"l1")
+l2 = LeafNode(labels, 'l2')
+r2 = LeafNode(labels, 'r2')
 
-class Node(ABC):
-    @abstractmethod
-    def predict(self,x):
-        pass
+d1 = DecisionNode(8,l2,r2)
+root = DecisionNode(5,l1,d1)
 
-class LeafNode(Node):
-    def __init__(self,labels_dict,leaf_name):
-        self.labels_dict = labels_dict
-        self.leaf_name = leaf_name
-
-    # predict acts as the execute()
-    def predict(self,x):
-        print(f"[{self.leaf_name}] At Leaf x={x} -> returning {self.labels_dict[x]}")
-        return self.labels_dict[x]
-
-class DecisionNode(Node):
-    def __init__(self, threshold, left: Node,right: Node):
-        self.threshold = threshold
-        self.left = left
-        self.right = right
-
-    # x will be a number so no feat_idx
-    def predict(self,x):
-        if x <= self.threshold:
-            print("LEFT")
-            # predict(node, x) todos os atributos são salvos
-            return self.left.predict(x)
-        print("RIGHT")
-        return self.right.predict(x)
-    
-#------------------------ STATE ------------------------#
-class State(ABC):
-
-    @property
-    def context(self):
-        return self._context
-
-    @context.setter
-    def context(self, context):
-        self._context = context
-
-    @abstractmethod
-    def run(self):
-        pass
-    
-class SplittingState(State):
-    def run(self):
-        print("SplittingState...")
-        self.context.transition_to(StoppingState())
-
-class StoppingState(State):
-    def run(self):
-        print("StoppingState...")
-        self.context.transition_to(PruningState())
-
-class PruningState(State):
-    def run(self):
-        print("PruningState...")
-
-
-class TreeBuilder:
-
-    def __init__(self, state: State):
-        self.root = state
-        self.transition_to(state)
-
-    def transition_to(self, state: State):
-        self._state = state
-        self._state.context = self     
-
-    def execute(self):
-        return self._state.run()      
-
+print(root.predict(2))
+print('\n\n')
+print(root.predict(9))
+print('\n\n')
+print(root.predict(6))
