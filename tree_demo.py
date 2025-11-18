@@ -53,7 +53,8 @@ class StoppingState(State):
 class PruningState(State):
     pass
 
-class Context(ABC):
+
+class TreeBuilder:
     _state = None
 
     def __init__(self,state):
@@ -65,11 +66,6 @@ class Context(ABC):
 
     def execute(self):
         return self.state.run()
-    
-    
-
-class TreeBuilder(Context):
-    pass
 
 
 
