@@ -6,6 +6,8 @@ from abc import abstractmethod, ABC
     # Adding the inoput and output types specifications later 
     # Our tree will only work for numeric values!
 
+#------------------------ COMPOSITE ------------------------#
+
 class Node(ABC):
     @abstractmethod
     def predict(self,x):
@@ -35,3 +37,25 @@ class DecisionNode(Node):
             return self.left.predict(x)
         print("RIGHT")
         return self.right.predict(x)
+    
+#------------------------ STATE ------------------------#
+class State(ABC):
+    pass    
+    
+class SplittingState(State):
+    pass
+
+class StoppingState(State):
+    pass
+
+class PruningState(State):
+    pass
+
+class Context(ABC):
+    pass
+
+class TreeBuilder(Context):
+    pass
+
+
+
