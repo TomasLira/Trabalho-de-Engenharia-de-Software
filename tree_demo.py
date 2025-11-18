@@ -40,32 +40,41 @@ class DecisionNode(Node):
     
 #------------------------ STATE ------------------------#
 class State(ABC):
+
+    @property
+    def context(self):
+        return self._context
+
+    @context.setter
+    def context(self, context):
+        self._context = context
+
     @abstractmethod
     def run(self):
-        pass    
+        pass
     
 class SplittingState(State):
-    pass
+    print("SplittingState...")
 
 class StoppingState(State):
-    pass
+    print("StoppingState...")
 
 class PruningState(State):
-    pass
+    print("PruningState...")
 
 
 class TreeBuilder:
-    _state = None
 
-    def __init__(self,state):
+    def __init__(self, state: State):
         self.transition_to(state)
 
     def transition_to(self, state: State):
         self._state = state
-        self._state_context = self
+        self._state.context = self     
 
     def execute(self):
-        return self.state.run()
+        return self._state.run()      
+
 
 
 
