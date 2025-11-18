@@ -40,7 +40,9 @@ class DecisionNode(Node):
     
 #------------------------ STATE ------------------------#
 class State(ABC):
-    pass    
+    @abstractmethod
+    def run(self):
+        pass    
     
 class SplittingState(State):
     pass
@@ -52,7 +54,19 @@ class PruningState(State):
     pass
 
 class Context(ABC):
-    pass
+    _state = None
+
+    def __init__(self,state):
+        self.transition_to(state)
+
+    def transition_to(self, state: State):
+        self._state = state
+        self._state_context = self
+
+    def execute(self):
+        return self.state.run()
+    
+    
 
 class TreeBuilder(Context):
     pass
