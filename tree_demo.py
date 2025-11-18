@@ -56,10 +56,12 @@ class State(ABC):
 class SplittingState(State):
     def run(self):
         print("SplittingState...")
+        self.context.transition_to(StoppingState())
 
 class StoppingState(State):
     def run(self):
         print("StoppingState...")
+        self.context.transition_to(PruningState())
 
 class PruningState(State):
     def run(self):
