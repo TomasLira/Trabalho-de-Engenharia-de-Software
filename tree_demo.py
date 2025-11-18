@@ -54,18 +54,22 @@ class State(ABC):
         pass
     
 class SplittingState(State):
-    print("SplittingState...")
+    def run(self):
+        print("SplittingState...")
 
 class StoppingState(State):
-    print("StoppingState...")
+    def run(self):
+        print("StoppingState...")
 
 class PruningState(State):
-    print("PruningState...")
+    def run(self):
+        print("PruningState...")
 
 
 class TreeBuilder:
 
     def __init__(self, state: State):
+        self.root = state
         self.transition_to(state)
 
     def transition_to(self, state: State):
@@ -74,7 +78,4 @@ class TreeBuilder:
 
     def execute(self):
         return self._state.run()      
-
-
-
 
