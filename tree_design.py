@@ -112,11 +112,13 @@ class PreOrderIterator:
 #------------------------ VISITOR ------------------------#
 
 class Visitor(ABC):
-    
-    def visit_leaf(self):
+
+    @abstractmethod
+    def visit_leaf(self,leaf_node):
         pass
 
-    def visit_decision(self):
+    @abstractmethod
+    def visit_decision(self, decision_node):
         pass
 
 class DepthVisitor(Visitor):
