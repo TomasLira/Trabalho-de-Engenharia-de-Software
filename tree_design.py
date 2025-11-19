@@ -14,10 +14,8 @@ class Node(ABC):
     def predict(self,x):
         pass
 
-    # To make the iterator work
     @property
     def children(self):
-        # Por padrão, nenhum filho
         return []
 
 class LeafNode(Node):
@@ -25,7 +23,6 @@ class LeafNode(Node):
         self.labels_dict = labels_dict
         self.leaf_name = leaf_name
 
-    # predict acts as the execute()
     def predict(self,x):
         print(f"[Composite] ({self.leaf_name}) At Leaf x={x} -> returning {self.labels_dict[x]}")
         return self.labels_dict[x]
@@ -36,11 +33,9 @@ class DecisionNode(Node):
         self.left = left
         self.right = right
 
-    # x will be a number so no feat_idx
     def predict(self,x):
         if x <= self.threshold:
             print("[Composite] LEFT")
-            # predict(node, x) todos os atributos são salvos
             return self.left.predict(x)
         print("[Composite] RIGHT")
         return self.right.predict(x)
@@ -114,13 +109,21 @@ class PreOrderIterator:
             self.stack.append(child)
         return node
     
-# #------------------------ VISITOR ------------------------#
+#------------------------ VISITOR ------------------------#
 
-# class DepthVisitor:
-#     pass
+class Visitor(ABC):
+    
+    def visit_leaf(self):
+        pass
 
-# class CountLeavesVisitor:
-#     pass
+    def visit_decision(self):
+        pass
+
+class DepthVisitor(Visitor):
+    pass
+
+class CountLeavesVisitor(Visitor):
+    pass
 
 
 
