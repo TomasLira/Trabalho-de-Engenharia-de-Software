@@ -21,7 +21,7 @@ class LeafNode(Node):
 
     # predict acts as the execute()
     def predict(self,x):
-        print(f"[{self.leaf_name}] At Leaf x={x} -> returning {self.labels_dict[x]}")
+        print(f"[Composite] ({self.leaf_name}) At Leaf x={x} -> returning {self.labels_dict[x]}")
         return self.labels_dict[x]
 
 class DecisionNode(Node):
@@ -33,10 +33,10 @@ class DecisionNode(Node):
     # x will be a number so no feat_idx
     def predict(self,x):
         if x <= self.threshold:
-            print("LEFT")
+            print("[Composite] LEFT")
             # predict(node, x) todos os atributos são salvos
             return self.left.predict(x)
-        print("RIGHT")
+        print("[Composite] RIGHT")
         return self.right.predict(x)
     
 #------------------------ STATE ------------------------#
@@ -56,17 +56,17 @@ class State(ABC):
     
 class SplittingState(State):
     def run(self):
-        print("SplittingState...")
+        print("[State] SplittingState...")
         self.context.transition_to(StoppingState())
 
 class StoppingState(State):
     def run(self):
-        print("StoppingState...")
+        print("[State] StoppingState...")
         self.context.transition_to(PruningState())
 
 class PruningState(State):
     def run(self):
-        print("PruningState...")
+        print("[State] PruningState...")
 
 
 class TreeBuilder:
@@ -83,3 +83,18 @@ class TreeBuilder:
         return self._state.run()      
 
 #------------------------ ITERATOR ------------------------#
+class PreOrderIterator:
+    def __init__(self, root):
+        self.root = root
+        print("[Iterator] Creating PreOrderIterator (mock)")
+
+    def __iter__(self):
+        print("[Iterator] __iter__ called")
+        return self
+    
+    def __next__(self):
+        print("[Iterator] Visiting next Node")
+        raise StopIteration
+
+
+
