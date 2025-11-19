@@ -14,6 +14,11 @@ class Node(ABC):
     def predict(self,x):
         pass
 
+    # required method for Visitor pattern implementation!
+    @abstractmethod
+    def accept(self,visitor: Visitor):
+        pass
+
     @property
     def children(self):
         return []
@@ -26,6 +31,9 @@ class LeafNode(Node):
     def predict(self,x):
         print(f"[Composite] ({self.leaf_name}) At Leaf x={x} -> returning {self.labels_dict[x]}")
         return self.labels_dict[x]
+    
+    def accept(self,visitor):
+        return visitor.visit_leaf(self)
 
 class DecisionNode(Node):
     def __init__(self, threshold, left: Node,right: Node):
@@ -39,6 +47,9 @@ class DecisionNode(Node):
             return self.left.predict(x)
         print("[Composite] RIGHT")
         return self.right.predict(x)
+    
+    def accept(self,visitor):
+        return visitor.visit_decision(self)
     
     @property
     def children(self):
