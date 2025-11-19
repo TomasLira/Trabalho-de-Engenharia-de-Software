@@ -14,6 +14,12 @@ class Node(ABC):
     def predict(self,x):
         pass
 
+    # To make the iterator work
+    @property
+    def children(self):
+        # Por padrão, nenhum filho
+        return []
+
 class LeafNode(Node):
     def __init__(self,labels_dict,leaf_name):
         self.labels_dict = labels_dict
@@ -38,6 +44,10 @@ class DecisionNode(Node):
             return self.left.predict(x)
         print("[Composite] RIGHT")
         return self.right.predict(x)
+    
+    @property
+    def children(self):
+        return [self.left, self.right]
     
 #------------------------ STATE ------------------------#
 class State(ABC):
@@ -84,17 +94,33 @@ class TreeBuilder:
 
 #------------------------ ITERATOR ------------------------#
 class PreOrderIterator:
-    def __init__(self, root):
-        self.root = root
-        print("[Iterator] Creating PreOrderIterator (mock)")
+    def __init__(self, root: Node):
+        self.stack = [root]
+        print("[Iterator] Creating PreOrderIterator")
 
     def __iter__(self):
         print("[Iterator] __iter__ called")
         return self
     
     def __next__(self):
-        print("[Iterator] Visiting next Node")
-        raise StopIteration
+        if not self.stack:
+            print("[Iterator] StopIteration")
+            raise StopIteration
+
+        node = self.stack.pop()
+        print(f"[Iterator] Visiting: {node}")
+
+        for child in reversed(node.children):
+            self.stack.append(child)
+        return node
+    
+# #------------------------ VISITOR ------------------------#
+
+# class DepthVisitor:
+#     pass
+
+# class CountLeavesVisitor:
+#     pass
 
 
 
