@@ -3,9 +3,6 @@ from __future__ import annotations
 from typing import List, Tuple, Any, Optional
 from abc import abstractmethod, ABC
 
-#--- eOBSe & eTODOe ---
-    # Adding the inoput and output types specifications later 
-    # Our tree will only work for numeric values!
 
 #------------------------ COMPOSITE ------------------------#
 
