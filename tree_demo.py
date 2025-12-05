@@ -30,7 +30,7 @@ print('PREDICTING VALUE:',6)
 print(root.predict(6))
 print('\n')
 
-print("\n------------------[ITERATOR + COMPOSITE]------------------")
+print("\n------------------[ITERATOR]------------------")
 it = PreOrderIterator(root)
 for node in it:
     if isinstance(node, LeafNode):
@@ -53,7 +53,7 @@ print('\n')
 print("Phase 3: Pruning (simplifying the tree)...")
 builder.execute()
 print('\n')
-print("State cycles finished.")
+print("State cycles finished")
 
 
 print("\n------------------[VISITOR]------------------")
@@ -71,10 +71,9 @@ print(f"Total number of leaves = {count_visitor.count}")
 print('\n')
 
 depth_visitor = DepthVisitor()
-print("Applying DepthVisitor using PreOrderIterator...\n")
+print("Applying DepthVisitor using PreOrderIterator...")
+print('\n')
 
 for node in PreOrderIterator(root):
     node.accept(depth_visitor)
 
-print('\n')
-print(f"Maximum depth observed (mock) = {depth_visitor.max_depth}")
