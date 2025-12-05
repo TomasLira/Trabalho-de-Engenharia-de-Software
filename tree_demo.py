@@ -1,6 +1,6 @@
-from tree_design import LeafNode,DecisionNode,PreOrderIterator,CountLeavesVisitor,DepthVisitor
+from tree_design import LeafNode,DecisionNode,PreOrderIterator,CountLeavesVisitor,DepthVisitor, SplittingState,PruningState, TreeBuilder
 
-print("------------------[COMPOSITE MOCK]------------------")
+print("------------------[COMPOSITE]------------------")
 labels = {idx: (True if idx % 2 == 1 else False) for idx in range(1, 11)}
 
 l1 = LeafNode(labels,"l1")
@@ -37,3 +37,21 @@ for node in it:
         print(f"Found LeafNode: {node.leaf_name}")
     elif isinstance(node, DecisionNode):
         print(f"Found DecisionNode with threshold={node.threshold}")
+
+print("\n------------------[STATE]------------------")
+
+# Using the same tree as above
+initial_state = SplittingState()
+builder = TreeBuilder(initial_state)
+print('\n')
+print("Phase 1: Splitting (tree expansion)...")
+builder.execute()
+print('\n')
+print("Phase 2: Stopping (stop growing the tree)...")
+builder.execute() 
+print('\n')
+print("Phase 3: Pruning (simplifying the tree)...")
+builder.execute()
+print('\n')
+print("State cycles finished.")
+
