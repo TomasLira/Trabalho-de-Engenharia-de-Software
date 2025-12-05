@@ -133,10 +133,26 @@ class Visitor(ABC):
         pass
 
 class DepthVisitor(Visitor):
-    pass
+    def __init__(self):
+        self.current_depth = 0
+        self.max_depth = 0
+
+    def visit_leaf(self, leaf_node: LeafNode):
+        print(f"[Visitor-Depth] Visiting leaf {leaf_node.leaf_name} at depth {self.current_depth}")
+        if self.current_depth > self.max_depth:
+            self.max_depth = self.current_depth
+
+    def visit_decision(self, decision_node: DecisionNode):
+        print(f"[Visitor-Depth] Visiting decisiion node with threshold={decision_node.threshold} at depth {self.current_depth}")
+
 
 class CountLeavesVisitor(Visitor):
-    pass
+    def __init__(self):
+        self.count = 0
 
+    def visit_leaf(self, leaf_node: LeafNode):
+        self.count += 1
+        print(f"[Visitor-CountLeaves] Counting leafs {leaf_node.leaf_name}. Total until now is: {self.count}")
 
-
+    def visit_decision(self, decision_node: DecisionNode):
+        print(f"[Visitor-CountLeaves] Visiting decision node threshold={decision_node.threshold}")
