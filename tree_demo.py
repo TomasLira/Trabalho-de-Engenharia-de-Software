@@ -1,6 +1,6 @@
 from tree_design import LeafNode,DecisionNode,PreOrderIterator,CountLeavesVisitor,DepthVisitor, SplittingState,PruningState, TreeBuilder
 
-print("------------------[COMPOSITE]------------------")
+print("\n------------------[COMPOSITE]------------------")
 labels = {idx: (True if idx % 2 == 1 else False) for idx in range(1, 11)}
 
 l1 = LeafNode(labels,"l1")
@@ -55,3 +55,26 @@ builder.execute()
 print('\n')
 print("State cycles finished.")
 
+
+print("\n------------------[VISITOR]------------------")
+
+count_visitor = CountLeavesVisitor()
+
+print("Applying CountLeavesVisitor using PreOrderIterator...")
+
+for node in PreOrderIterator(root):
+    node.accept(count_visitor)
+
+print('\n')
+print(f"Total number of leaves = {count_visitor.count}")
+
+print('\n')
+
+depth_visitor = DepthVisitor()
+print("Applying DepthVisitor using PreOrderIterator...\n")
+
+for node in PreOrderIterator(root):
+    node.accept(depth_visitor)
+
+print('\n')
+print(f"Maximum depth observed (mock) = {depth_visitor.max_depth}")
