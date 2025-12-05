@@ -1,4 +1,4 @@
-from tree_design import LeafNode,DecisionNode
+from tree_design import LeafNode,DecisionNode,PreOrderIterator,CountLeavesVisitor,DepthVisitor
 
 print("------------------[COMPOSITE MOCK]------------------")
 labels = {idx: (True if idx % 2 == 1 else False) for idx in range(1, 11)}
@@ -29,3 +29,11 @@ print('\n')
 print('PREDICTING VALUE:',6)
 print(root.predict(6))
 print('\n')
+
+print("\n------------------[ITERATOR + COMPOSITE]------------------")
+it = PreOrderIterator(root)
+for node in it:
+    if isinstance(node, LeafNode):
+        print(f"Found LeafNode: {node.leaf_name}")
+    elif isinstance(node, DecisionNode):
+        print(f"Found DecisionNode with threshold={node.threshold}")
