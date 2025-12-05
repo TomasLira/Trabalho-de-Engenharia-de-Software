@@ -1,4 +1,4 @@
-from tree_demo import LeafNode,DecisionNode
+from tree_design import LeafNode,DecisionNode
 
 labels = {idx: (True if idx % 2 == 1 else False) for idx in range(1, 11)}
 
