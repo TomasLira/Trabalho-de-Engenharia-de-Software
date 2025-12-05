@@ -46,4 +46,38 @@ classDiagram
     TreeBuilder --> State : mantém/avança
     State --> TreeBuilder : usa context
 
+classDiagram
+    class Node {
+        +children
+    }
+    class PreOrderIterator {
+        -stack
+        +__iter__()
+        +__next__()
+    }
+    PreOrderIterator --> Node : itera
+
+classDiagram
+    class Node {
+        +accept(visitor)
+    }
+    class Visitor {
+        +visit_leaf(leaf)
+        +visit_decision(decision)
+    }
+    class DepthVisitor {
+        -current_depth
+        -max_depth
+        +visit_leaf(leaf)
+        +visit_decision(decision)
+    }
+    class CountLeavesVisitor {
+        -count
+        +visit_leaf(leaf)
+        +visit_decision(decision)
+    }
+    Visitor <|-- DepthVisitor
+    Visitor <|-- CountLeavesVisitor
+    Node --> Visitor : accept(visitor)
+
 ```
