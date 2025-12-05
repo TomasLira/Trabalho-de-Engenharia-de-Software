@@ -20,4 +20,30 @@ classDiagram
     Node <|-- DecisionNode
     DecisionNode o--> Node : compõe filhos
 
+classDiagram
+    class State {
+        +context
+        +run()
+    }
+    class SplittingState {
+        +run()
+    }
+    class StoppingState {
+        +run()
+    }
+    class PruningState {
+        +run()
+    }
+    State <|-- SplittingState
+    State <|-- StoppingState
+    State <|-- PruningState
+
+    class TreeBuilder {
+        -_state
+        +transition_to(state)
+        +execute()
+    }
+    TreeBuilder --> State : mantém/avança
+    State --> TreeBuilder : usa context
+
 ```
